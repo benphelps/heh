@@ -1,0 +1,19 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    haml (4.0.7)
+      tilt
+    rack (2.0.1)
+    rack-livereload (0.3.16)
+      rack
+    tilt (2.0.6)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  haml
+  rack-livereload
+
+BUNDLED WITH
+   1.14.4
