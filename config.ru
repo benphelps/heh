@@ -18,16 +18,19 @@ configure do
 end
 
 helpers do
+  def layout
+    Tilt.new("#{APP}/#{VIEWS}/_layout.#{DEFAULT}").render do
+      yield
+    end
+  end
+
   def render(target)
     file = Dir.glob("#{APP}/#{VIEWS}/#{target}.{#{ACCEPTED}}")
-    template = Tilt.new("#{APP}/#{VIEWS}/_layout.#{DEFAULT}")
     renderer = Tilt.new("#{APP}/#{VIEWS}/index.#{DEFAULT}") if view.empty?
     renderer = Tilt.new(file.first) unless file.empty?
     renderer = Tilt.new("#{APP}/#{VIEWS}/_404.#{DEFAULT}") unless renderer
     return unless renderer
-    template.render do
-      renderer.render self, __view: view
-    end
+    renderer.render self
   end
 
   def view
@@ -35,7 +38,16 @@ helpers do
   end
 end
 
-get('*') { render view }
-post('*') { render view }
+get '*' do
+  layout do
+    render view
+  end
+end
+
+post '*' do
+  layout do
+    render view
+  end
+end
 
 run Sinatra::Application
